@@ -40,8 +40,15 @@
 enum combos {
     COMBO_LCTL,
     COMBO_LALT,
+    COMBO_LSFT,
+    COMBO_HOME,
+    COMBO_PGUP,
+    COMBO_DELETE,
     COMBO_RCTL,
     COMBO_RALT,
+    COMBO_RSFT,
+    COMBO_END_KEY, // "COMBO_END" is already used in QMK source elsewhere
+    COMBO_PGDN,
     COMBO_BSPC,
     COMBO_LYR0,
     COMBO_LYR1,
@@ -59,9 +66,16 @@ uint16_t COMBO_LEN = COMBO_LENGTH; // nifty trick continued
 // Left hand
 const uint16_t PROGMEM fd_combo[] = {KC_F, KC_D, COMBO_END};
 const uint16_t PROGMEM fs_combo[] = {KC_F, KC_S, COMBO_END};
+const uint16_t PROGMEM ds_combo[] = {KC_D, KC_S, COMBO_END};
+const uint16_t PROGMEM er_combo[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM vc_combo[] = {KC_V, KC_C, COMBO_END};
+const uint16_t PROGMEM fds_combo[] = {KC_F, KC_D, KC_S, COMBO_END};
 // Right hand
 const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM jl_combo[] = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM ui_combo[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM mcomma_combo[] = {KC_M, KC_COMMA, COMBO_END};
 const uint16_t PROGMEM jkl_combo[] = {KC_J, KC_K, KC_L, COMBO_END};
 // Layers
 const uint16_t PROGMEM fj_combo[] = {KC_F, KC_J, COMBO_END};
@@ -74,9 +88,16 @@ combo_t key_combos[] = {
     // Left hand
     [COMBO_LCTL] = COMBO(fd_combo, KC_LCTL),
     [COMBO_LALT] = COMBO(fs_combo, KC_LALT),
+    [COMBO_LSFT] = COMBO(ds_combo, KC_LSFT),
+    [COMBO_HOME] = COMBO(er_combo, KC_HOME),
+    [COMBO_PGUP] = COMBO(vc_combo, KC_PGUP),
+    [COMBO_DELETE] = COMBO(fds_combo, KC_DELETE),
     // Right hand
     [COMBO_RCTL] = COMBO(jk_combo, KC_RCTL),
     [COMBO_RALT] = COMBO(jl_combo, KC_RALT),
+    [COMBO_RSFT] = COMBO(kl_combo, KC_RSFT),
+    [COMBO_END_KEY] = COMBO(ui_combo, KC_END),
+    [COMBO_PGDN] = COMBO(mcomma_combo, KC_PGDN),
     [COMBO_BSPC] = COMBO(jkl_combo, KC_BSPC),
     // Layers
     [COMBO_LYR0] = COMBO(fj_combo, TO(0)),
