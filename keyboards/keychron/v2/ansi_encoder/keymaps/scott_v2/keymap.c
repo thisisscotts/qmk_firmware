@@ -108,6 +108,67 @@ combo_t key_combos[] = {
 };
 
 /**********************************************************************************************************
+ *                                              Custom Keycodes
+ **********************************************************************************************************/
+
+enum custom_keycodes_scott {
+  CP_OPN = SAFE_RANGE,
+  CP_TOEN,
+  CP_TOHM,
+  CP_LINE,
+  PA_EMAIL
+};
+
+
+/**********************************************************************************************************
+ *                                              Processing
+ **********************************************************************************************************/
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Keychron custom codes
+    if (!process_record_keychron(keycode, record)) {
+        return false;
+
+    // Else Scott's custom codes
+    } else {
+        switch (keycode) {
+            case CP_OPN:  // Copies the selected text to clipboard, opens a new browser window, pastes and goes.
+                if (record->event.pressed) {
+                    SEND_STRING(SS_LCTL("c") SS_DELAY(50) SS_LCTL("tv") SS_TAP(X_ENT));
+                }
+                break;
+
+            case CP_LINE:  // Selects the current line and copies it to the clipboard.
+                if (record->event.pressed) {
+                    SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SS_LCTL("c"));
+                }
+                break;
+
+            case CP_TOHM:  // Selects from the current position to Home and copies it to the clipboard.
+                if (record->event.pressed) {
+                    SEND_STRING(SS_LSFT(SS_TAP(X_HOME)) SS_LCTL("c"));
+                }
+                break;
+
+            case CP_TOEN:  // Selects from the current position to End and copies it to the clipboard.
+                if (record->event.pressed) {
+                    SEND_STRING(SS_LSFT(SS_TAP(X_END)) SS_LCTL("c"));
+                }
+                break;
+
+            case PA_EMAIL:  // Send email when keycode is pressed
+                if (record->event.pressed) {
+                    SEND_STRING("this.is.scotts.email.address@gmail.com");
+                }
+                break;
+        }
+    }
+
+    return true;
+}
+
+
+/**********************************************************************************************************
  *                                              Layers
  **********************************************************************************************************/
 
@@ -137,7 +198,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_02] = LAYOUT_ansi_67(
         KC_GRV,  _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,          _______,
         _______, _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,          _______,
-        _______, _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______,            _______,          _______,
+        _______, _______,  _______,  CP_LINE, CP_TOHM, _______, _______, CP_TOEN, CP_OPN,  PA_EMAIL, _______,  _______,            _______,          _______,
         _______,           _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______,            _______, TO(3),
         _______, _______,  _______,                             _______,                            _______,  _______,  _______,  _______, TO(1),   _______),
 
@@ -148,7 +209,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,           _______,  _______, _______, _______, _______, NK_TOGG, _______, _______, _______,  _______,            _______, TO(0),
         _______, _______,  _______,                             _______,                            _______,  _______,  _______,  _______, TO(2),   _______)
 };
-
 
 
 // Use a bool to determine whether to show default RGB or custom colours based on layer
@@ -209,13 +269,4 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 #endif // ENCODER_MAP_ENABLE
 
 
-/**********************************************************************************************************
- *                                              Processing
- **********************************************************************************************************/
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_keychron(keycode, record)) {
-        return false;
-    }
-    return true;
-}
