@@ -38,15 +38,9 @@
 
 // define combo names
 enum combos {
-    COMBO_LCTL,
-    COMBO_LALT,
-    COMBO_LSFT,
     COMBO_HOME,
     COMBO_PGUP,
     COMBO_DELETE,
-    COMBO_RCTL,
-    COMBO_RALT,
-    COMBO_RSFT,
     COMBO_END_KEY, // "COMBO_END" is already used in QMK source elsewhere
     COMBO_PGDN,
     COMBO_BSPC,
@@ -65,44 +59,32 @@ uint16_t COMBO_LEN = COMBO_LENGTH; // nifty trick continued
 
 // Left hand
 const uint16_t PROGMEM fd_combo[] = {KC_F, KC_D, COMBO_END};
-const uint16_t PROGMEM fs_combo[] = {KC_F, KC_S, COMBO_END};
 const uint16_t PROGMEM ds_combo[] = {KC_D, KC_S, COMBO_END};
 const uint16_t PROGMEM er_combo[] = {KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM vc_combo[] = {KC_V, KC_C, COMBO_END};
-const uint16_t PROGMEM fds_combo[] = {KC_F, KC_D, KC_S, COMBO_END};
 // Right hand
 const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM jl_combo[] = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM ui_combo[] = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM mcomma_combo[] = {KC_M, KC_COMMA, COMBO_END};
-const uint16_t PROGMEM jkl_combo[] = {KC_J, KC_K, KC_L, COMBO_END};
 // Layers
-const uint16_t PROGMEM fj_combo[] = {KC_F, KC_J, COMBO_END};
-const uint16_t PROGMEM dk_combo[] = {KC_D, KC_K, COMBO_END};
-const uint16_t PROGMEM sl_combo[] = {KC_S, KC_L, COMBO_END};
+const uint16_t PROGMEM ru_combo[] = {KC_R, KC_U, COMBO_END};
+const uint16_t PROGMEM ei_combo[] = {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM wo_combo[] = {KC_W, KC_O, COMBO_END};
 const uint16_t PROGMEM ascln_combo[] = {KC_A, KC_SCLN, COMBO_END};
 
 // map combo names to their keys and the key they trigger
 combo_t key_combos[] = {
     // Left hand
-    [COMBO_LCTL] = COMBO(fd_combo, KC_LCTL),
-    [COMBO_LALT] = COMBO(fs_combo, KC_LALT),
-    [COMBO_LSFT] = COMBO(ds_combo, KC_LSFT),
-    [COMBO_HOME] = COMBO(er_combo, KC_HOME),
-    [COMBO_PGUP] = COMBO(vc_combo, KC_PGUP),
-    [COMBO_DELETE] = COMBO(fds_combo, KC_DELETE),
+    [COMBO_DELETE] = COMBO(fd_combo, KC_DELETE),
+    [COMBO_HOME] = COMBO(ds_combo, KC_HOME),
+    [COMBO_PGUP] = COMBO(er_combo, KC_PGUP),
     // Right hand
-    [COMBO_RCTL] = COMBO(jk_combo, KC_RCTL),
-    [COMBO_RALT] = COMBO(jl_combo, KC_RALT),
-    [COMBO_RSFT] = COMBO(kl_combo, KC_RSFT),
-    [COMBO_END_KEY] = COMBO(ui_combo, KC_END),
-    [COMBO_PGDN] = COMBO(mcomma_combo, KC_PGDN),
-    [COMBO_BSPC] = COMBO(jkl_combo, KC_BSPC),
+    [COMBO_BSPC] = COMBO(jk_combo, KC_BSPC),
+    [COMBO_END_KEY] = COMBO(kl_combo, KC_END),
+    [COMBO_PGDN] = COMBO(ui_combo, KC_PGDN),
     // Layers
-    [COMBO_LYR0] = COMBO(fj_combo, TO(0)),
-    [COMBO_LYR1] = COMBO(dk_combo, TO(1)),
-    [COMBO_LYR2] = COMBO(sl_combo, TO(2)),
+    [COMBO_LYR0] = COMBO(ru_combo, TO(0)),
+    [COMBO_LYR1] = COMBO(ei_combo, TO(1)),
+    [COMBO_LYR2] = COMBO(wo_combo, TO(2)),
     [COMBO_LYR3] = COMBO(ascln_combo, TO(3)),
     // more here...
 };
@@ -116,7 +98,8 @@ enum custom_keycodes_scott {
   CP_TOEN,
   CP_TOHM,
   CP_LINE,
-  PA_EMAIL
+  PA_EMAIL,
+  PA_WEMAIL
 };
 
 
@@ -161,6 +144,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING("this.is.scotts.email.address@gmail.com");
                 }
                 break;
+
+            case PA_WEMAIL:  // Send work email when keycode is pressed
+                if (record->event.pressed) {
+                    SEND_STRING("scottmorgan@chevron.com");
+                }
+                break;
         }
     }
 
@@ -182,11 +171,11 @@ enum layers{
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_00] = LAYOUT_ansi_67(
-        KC_ESC,  KC_1,     KC_2,     KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,          KC_MUTE,
-        KC_TAB,  KC_Q,     KC_W,     KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,          KC_DEL,
-        KC_CAPS, KC_A,     KC_S,     KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,            KC_ENT,           KC_HOME,
-        KC_LSFT,           KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH,            KC_RSFT, KC_UP,
-        KC_LCTL, KC_LGUI,  KC_LALT,                             KC_SPC,                             KC_RALT,  MO(LAYER_01), MO(LAYER_02), KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_ESC,  KC_1,     KC_2,            KC_3,           KC_4,   KC_5,           KC_6,    KC_7,    KC_8,         KC_9,           KC_0,           KC_MINS,        KC_EQL,   KC_BSPC,   KC_MUTE,
+        KC_TAB,  KC_Q,     KC_W,            KC_E,           KC_R,   KC_T,           KC_Y,    KC_U,    KC_I,         KC_O,           KC_P,           KC_LBRC,        KC_RBRC,  KC_BSLS,   KC_DEL,
+        KC_CAPS, KC_A,     LALT_T(KC_S),    LCTL_T(KC_D),           LSFT_T(KC_F),   KC_G,    KC_H,    LSFT_T(KC_J), LCTL_T(KC_K),   LALT_T(KC_L),   KC_SCLN,  KC_QUOT,   KC_ENT,         KC_HOME,
+        KC_LSFT,           KC_Z,            KC_X,           KC_C,   KC_V,           KC_B,    KC_N,    KC_M,         KC_COMM,        KC_DOT,         KC_SLSH,        KC_RSFT,  KC_UP,
+        KC_LCTL, KC_LGUI,  KC_LALT,                             KC_SPC,                                             KC_RALT,        MO(LAYER_01),   MO(LAYER_02),   KC_LEFT, KC_DOWN, KC_RGHT),
 
     [LAYER_01] = LAYOUT_ansi_67(
         KC_TILD, KC_F1,    KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,   KC_F12,   _______,          _______,
@@ -198,7 +187,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_02] = LAYOUT_ansi_67(
         KC_GRV,  _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,          _______,
         _______, _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,          _______,
-        _______, _______,  _______,  CP_LINE, CP_TOHM, _______, _______, CP_TOEN, CP_OPN,  PA_EMAIL, _______,  _______,            _______,          _______,
+        _______, _______,  PA_WEMAIL,  CP_LINE, CP_TOHM, _______, _______, CP_TOEN, CP_OPN,  PA_EMAIL, _______,  _______,            _______,          _______,
         _______,           _______,  _______, _______, _______, _______, _______, _______, _______, _______,  _______,            _______, TO(3),
         _______, _______,  _______,                             _______,                            _______,  _______,  _______,  _______, TO(1),   _______),
 
