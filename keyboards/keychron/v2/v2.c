@@ -16,39 +16,17 @@
 
 #include "quantum.h"
 
-<<<<<<< HEAD
-const matrix_row_t matrix_mask[] = {
-    0b111111111111111,
-    0b111111111111111,
-    0b111111111111111,
-    0b111111111111111,
-    0b111111111101111,
-};
-
-/*
-=======
->>>>>>> de4d28cd6065058057535aac168d48bd734f2adc
 #ifdef DIP_SWITCH_ENABLE
 
 bool dip_switch_update_kb(uint8_t index, bool active) {
     if (!dip_switch_update_user(index, active)) { return false;}
     if (index == 0) {
-        // default_layer_set(1UL << (active ? 1 : 0));
-        default_layer_set(1UL << (active ? 0 : 1));
+        default_layer_set(1UL << (active ? 1 : 0));
     }
     return true;
 }
 
 #endif // DIP_SWITCH_ENABLE
-*/
-
-#ifdef DIP_SWITCH_ENABLE
-bool dip_switch_update_kb(uint8_t index, bool active) {
-    dip_switch_update_user(index, active);
-    return true;
-}
-#endif // DIP_SWITCH_ENABLE
-
 
 #if defined(RGB_MATRIX_ENABLE) && defined(CAPS_LOCK_LED_INDEX)
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
