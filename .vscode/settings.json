@@ -35,6 +35,11 @@
     },
     "clangd.arguments": [
         "--header-insertion=never"
+<<<<<<< Updated upstream
     ]
 >>>>>>> upstream/master
+=======
+    ],
+    "cmake.configureOnOpen": true
+>>>>>>> Stashed changes
 }
