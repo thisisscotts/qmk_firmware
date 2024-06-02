@@ -192,3 +192,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
+
+/**********************************************************************************************************
+ *                                              Custom RGB
+ **********************************************************************************************************/
+
+// Use a bool to determine whether to show default RGB or custom colours based on layer
+bool custom_layer_rgb = false;
+
+// Set bool depending on state of Windows/Mac switch
+bool dip_switch_update_user(uint8_t index, bool active) {
+    switch (index) {
+        case 0:
+            if(active) {
+                //print("Dip switch active");
+                custom_layer_rgb = true;
+            } else {
+                //print("Dip switch not active");
+                custom_layer_rgb = false;
+            }
+            break;
+    }
+    return true;
+}
+
+// Display custom RGB colours per layer if the custom mode is selected
+bool rgb_matrix_indicators_user(void) {
+    if (custom_layer_rgb == true) {
+        switch (get_highest_layer(layer_state)) {
+            case LAYER_00:
+                rgb_matrix_set_color_all(0,255,255); // Cyan
+                break;
+            case LAYER_01:
+                rgb_matrix_set_color_all(255,128,0); // Orange
+                break;
+            case LAYER_02:
+                rgb_matrix_set_color_all(0,255,0); // Green
+                break;
+            case LAYER_03:
+                rgb_matrix_set_color_all(255,0,255); // Magenta
+                break;
+            default:
+                break;
+        }
+    }
+    return true;
+}
