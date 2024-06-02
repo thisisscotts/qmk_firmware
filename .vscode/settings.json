@@ -26,20 +26,17 @@
     },
     "python.formatting.provider": "yapf",
     "[json]": {
-<<<<<<< HEAD
 	    "editor.formatOnSave": false
     },
     "cmake.configureOnOpen": true
-=======
+
         "editor.formatOnSave": false
     },
     "clangd.arguments": [
         "--header-insertion=never"
-<<<<<<< Updated upstream
     ]
->>>>>>> upstream/master
-=======
+
     ],
     "cmake.configureOnOpen": true
->>>>>>> Stashed changes
+
 }
